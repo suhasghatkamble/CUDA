@@ -1,0 +1,5 @@
+Time taken by 4000 threads CPU: 275126.2390613556 milliseconds
+
+
+Time taken by 4000 threads GPU: 138.06509971618652 milliseconds
+

@@ -1,0 +1,52 @@
+https://docs.nvidia.com/hpc-sdk/compilers/openacc-gs/index.html
+--CLICK ON NVIDIA download webpage
+
+https://developer.nvidia.com/hpc-sdk-downloads
+--accept license agreement
+-- click on Linux x86_64 Ubuntu (apt)
+--follow all instructions/ commands step by step (remove $ at starting , give !),RUNTIME --GPU RUNTIME
+
+
+STEPS FOR GOOGLE COLAB OPENA ACC
+
+-- RUNTIME -- GPU RUNTIME
+
+
+
+!curl https://developer.download.nvidia.com/hpc-sdk/ubuntu/DEB-GPG-KEY-NVIDIA-HPC-SDK | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg
+
+
+!echo 'deb [signed-by=/usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg] https://developer.download.nvidia.com/hpc-sdk/ubuntu/amd64 /' | sudo tee /etc/apt/sources.list.d/nvhpc.list
+
+
+!sudo apt-get update -y
+
+
+!sudo apt-get install -y nvhpc-24-5
+
+
+!/opt/nvidia/hpc_sdk/Linux_x86_64/24.5/compilers/bin/nvaccelinfo
+
+
+(CODE IS AVAILABLE ON https://docs.nvidia.com/hpc-sdk/compilers/openacc-gs/index.html  SCROOL DOWN)
+
+%%writefile openacc_array.c
+#include <stdio.h>
+#define N 1000
+int array[N];
+int main() {
+#pragma acc parallel loop copy(array[0:N])
+   for(int i = 0; i < N; i++) {
+      array[i] = 3.0;
+   }
+   printf("Success!\n");
+}
+  
+  
+!/opt/nvidia/hpc_sdk/Linux_x86_64/24.5/compilers/bin/nvc -acc openacc_array.c -o openacc_array
+
+
+ls -l
+
+
+!./openacc_array
